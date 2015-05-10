@@ -1,0 +1,45 @@
+{
+  "orderId": "2015-05-10-11:59-878929384981",
+  "totalPrice": 981.5,
+  "datetime": 1431230460766,
+  "customerId": "DeepNightTwo",
+  "ip": "1.2.3.4",
+  "location": "Shanghai",
+  "ref": "google-search",
+  "payTypes": {
+    "creditCard": 900.0,
+    "prePaidAccount": 80.0,
+    "memberPoint": 1.5
+  },
+  "transferCost": 0.0,
+  "items": [
+    {
+      "sku": "B00CY3UZ38",
+      "amount": 2,
+      "price": 69,
+      "name": "Devondale Milk imported from Australia",
+      "type": "buy"
+    },
+    {
+      "sku": "B00CY3UZ38",
+      "amount": 2,
+      "price": 69,
+      "name": "Devondale Milk imported from Australia",
+      "type": "buy"
+    },
+    {
+      "sku": "B00USP7V7C",
+      "amount": 1,
+      "price": 344.5,
+      "name": "Kindle Reader DS Version",
+      "type": "buy"
+    },
+    {
+      "sku": "B008BQH1NO",
+      "amount": 1,
+      "price": 288,
+      "name": "Kindle Reader DS Version",
+      "type": "gift"
+    }
+  ]
+}

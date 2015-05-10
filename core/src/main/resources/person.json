@@ -1,0 +1,25 @@
+{
+  "name": "Jim Green",
+  "addr": "Shanghai Tangchen yipin No1",
+  "workexp": [
+    {
+      "companyName": "Mobile",
+      "position": "Software Developer"
+    },
+    {
+      "companyName": "Google",
+      "position": "Software Developer"
+    },
+    {
+      "companyName": "Baidu",
+      "position": "Staff"
+    }
+  ],
+  "age": 25,
+  "education": "University",
+  "income": 1500000,
+  "startIncome": 80000,
+  "workyear": 5,
+  "location": "Shanghai",
+  "married": true
+}

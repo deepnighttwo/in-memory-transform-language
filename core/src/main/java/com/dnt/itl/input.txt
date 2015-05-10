@@ -1,0 +1,18 @@
+select
+     person.name as name,
+     upper(person.addr) as addr,
+     person.workexp[0] as firstwork,
+     isGoodIncome(person.age, person.education, person.income) as isGoodIncome,
+     (person.income-person.startIncome)/person.workyear as salaryIncreaseYearly,
+     null as furtherData,
+     nowStr() as datetime,
+     "Phase1" as currStep,
+     99 as status,
+     'a' as grade,
+     98.5 as mark,
+     person.married as marriedStatus
+from PersonData as person
+    where (person.age > 30 and person.workyear > 7) 
+    or person.location="Shanghai"
+    or person.education="doctor"
+    
