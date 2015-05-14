@@ -1,0 +1,17 @@
+.idea/
+*.iml
+out/
+target/
+.classpath
+.project
+.settings
+.externalToolBuilders
+bin/
+Thumbs.db
+classes
+*.eml
+*.iml
+*.userlibraries
+*.pid
+log/
+node_modules/
