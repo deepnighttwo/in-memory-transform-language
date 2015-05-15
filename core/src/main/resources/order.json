@@ -16,22 +16,23 @@
     {
       "sku": "B00CY3UZ38",
       "amount": 2,
+      "cost": 50,
       "price": 69,
       "name": "Devondale Milk imported from Australia",
       "type": "buy"
     },
     {
-      "sku": "B00CY3UZ38",
-      "amount": 2,
-      "price": 69,
-      "name": "Devondale Milk imported from Australia",
+      "sku": "B00PTBGE96",
+      "amount": 1,
+      "price": 499,
+      "name": "Kindle Reader DS Version",
       "type": "buy"
     },
     {
       "sku": "B00USP7V7C",
       "amount": 1,
       "price": 344.5,
-      "name": "Kindle Reader DS Version",
+      "name": "NIKE REVOLUTION 2 MSL 554954",
       "type": "buy"
     },
     {

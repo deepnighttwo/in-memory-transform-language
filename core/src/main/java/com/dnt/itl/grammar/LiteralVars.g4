@@ -1,7 +1,5 @@
 lexer grammar LiteralVars;
 
-
-
 EQUALS      : '=';
 BIGGER      : '>';
 SMALLER     : '<';
@@ -33,6 +31,8 @@ DIV         : '/' ;
 ADD         : '+' ;
 SUB         : '-' ;
 
+MAP         : 'map';
+REDUCE      : 'reduce';
 
 HexLiteral : '0' ('x'|'X') HexDigit+ IntegerTypeSuffix? ;
 

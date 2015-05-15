@@ -71,6 +71,17 @@ public class JSONITLVisitor extends ITLBaseVisitor<Object> {
     }
 
     @Override
+    public Object visitMapFuncVar(@NotNull ITLParser.MapFuncVarContext ctx) {
+        String mapFuncName = ctx.ID().getText();
+        return super.visitMapFuncVar(ctx);
+    }
+
+    @Override
+    public Object visitReduceFuncVar(@NotNull ITLParser.ReduceFuncVarContext ctx) {
+        return super.visitReduceFuncVar(ctx);
+    }
+
+    @Override
     public Object visitSelect(@NotNull ITLParser.SelectContext ctx) {
         result = new LinkedHashMap();
         super.visitSelect(ctx);

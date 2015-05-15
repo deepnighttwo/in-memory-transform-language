@@ -10,17 +10,19 @@ where       : WHERE boolExpr;
 // prop part
 propsSel    : propVar (AS ID)?;
 
-propVar     : propFullName                                              # DirectPropVar
-            | LPAREN propVar RPAREN                                     # Parens
-            | propVar op=(MUL |DIV ) propVar                            # MulDiv
-            | propVar op=(ADD |SUB ) propVar                            # AddSub
-            | integerLiteral                                            # IntVar
-            | FloatingPointLiteral                                      # FloatVar
-            | CharacterLiteral                                          # CharVar
-            | StringLiteral                                             # StringVar
-            | booleanLiteral                                            # BooleanVar
-            | NULL                                                      # NullVar
-            | ID LPAREN propFullName? (COMMA propFullName)* RPAREN      # FuncVar
+propVar     : propFullName                                                          # DirectPropVar
+            | LPAREN propVar RPAREN                                                 # Parens
+            | propVar op=(MUL |DIV ) propVar                                        # MulDiv
+            | propVar op=(ADD |SUB ) propVar                                        # AddSub
+            | integerLiteral                                                        # IntVar
+            | FloatingPointLiteral                                                  # FloatVar
+            | CharacterLiteral                                                      # CharVar
+            | StringLiteral                                                         # StringVar
+            | booleanLiteral                                                        # BooleanVar
+            | NULL                                                                  # NullVar
+            | MAP LPAREN ID COMMA propVar? (COMMA propVar)* RPAREN                  # MapFuncVar
+            | REDUCE LPAREN ID COMMA propVar? (COMMA propVar)* RPAREN               # ReduceFuncVar
+            | ID LPAREN propVar? (COMMA propVar)* RPAREN                            # FuncVar
             ;
 
 propFullName: propName (DOT propName)*;
