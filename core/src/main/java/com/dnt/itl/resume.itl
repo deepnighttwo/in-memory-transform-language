@@ -11,8 +11,8 @@ select
      'a' as grade,
      98.5 as mark,
      person.married as marriedStatus,
-     map(mapfuc, person.name) as mapName,
-     reduce(reducefunc, person.age) as reduceAge
+     map on person.workexp (companyName) as mapCompanyName,
+     reduce on person.workexp using maxOnFirst(workYear,companyName,position) as maxWorkExp
 from PersonData as person
     where (person.age > 30 and person.workyear > 7) 
     or person.location="Shanghai"

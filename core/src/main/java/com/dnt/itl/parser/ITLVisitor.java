@@ -7,17 +7,14 @@ import org.antlr.v4.runtime.misc.NotNull;
 
 import java.lang.reflect.InvocationTargetException;
 import java.lang.reflect.Method;
-import java.util.HashMap;
-import java.util.LinkedHashMap;
-import java.util.List;
-import java.util.Map;
+import java.util.*;
 
 /**
  * User: Mark Zang
  * Date: 2015/4/16
  * Time: 15:22
  */
-public class JSONITLVisitor extends ITLBaseVisitor<Object> {
+public class ITLVisitor extends ITLBaseVisitor<Object> {
 
     // FIXME: might cause OOM if too many method is cached...
     static Map<Class, Map<String, Method>> methodCache = new HashMap<>();
@@ -38,11 +35,11 @@ public class JSONITLVisitor extends ITLBaseVisitor<Object> {
         this.functionMgr = functionMgr;
     }
 
-    public JSONITLVisitor(Object rawData) {
+    public ITLVisitor(Object rawData) {
         this.rawData = rawData;
     }
 
-    public JSONITLVisitor() {
+    public ITLVisitor() {
     }
 
     public Object getRawData() {
@@ -72,13 +69,84 @@ public class JSONITLVisitor extends ITLBaseVisitor<Object> {
 
     @Override
     public Object visitMapFuncVar(@NotNull ITLParser.MapFuncVarContext ctx) {
-        String mapFuncName = ctx.ID().getText();
-        return super.visitMapFuncVar(ctx);
+
+        Object mapOn = visit(ctx.propFullName());
+
+        List mapOnList = null;
+        // TODO: using Iterable?
+        if (mapOn instanceof List) {
+            mapOnList = (List) mapOn;
+        } else if (mapOn.getClass().isArray()) {
+            mapOnList = Arrays.asList((Object[]) mapOn);
+        } else {
+            throw new IllegalArgumentException("Not list or array:" + mapOn);
+        }
+
+        List mapResult = new ArrayList(mapOnList.size() - 1);
+        Object origin = rawData;
+
+        List<ITLParser.PropVarContext> propVarContexts = ctx.propVar();
+        try {
+            for (Object obj : mapOnList) {
+                rawData = obj;
+                currData = obj;
+                List mapResultRow = new ArrayList(propVarContexts.size());
+                for (int i = 0; i < propVarContexts.size(); i++) {
+                    mapResultRow.add(visit(propVarContexts.get(i)));
+                }
+                mapResult.add(mapResultRow);
+            }
+        } finally {
+            rawData = origin;
+        }
+        return mapResult;
     }
 
     @Override
     public Object visitReduceFuncVar(@NotNull ITLParser.ReduceFuncVarContext ctx) {
-        return super.visitReduceFuncVar(ctx);
+        Object reduceOn = visit(ctx.propFullName());
+
+        List reduceOnList = null;
+        // TODO: using Iterable?
+        if (reduceOn instanceof List) {
+            reduceOnList = (List) reduceOn;
+        } else if (reduceOn.getClass().isArray()) {
+            reduceOnList = Arrays.asList((Object[]) reduceOn);
+        } else {
+            throw new IllegalArgumentException("Not list or array:" + reduceOn);
+        }
+
+        List reduceData = new ArrayList(reduceOnList.size() - 1);
+        Object origin = rawData;
+
+        List<ITLParser.PropVarContext> propVarContexts = ctx.propVar();
+
+        try {
+            for (Object obj : reduceOnList) {
+                rawData = obj;
+                currData = obj;
+                List reduceResultRow = new ArrayList(propVarContexts.size());
+                for (int i = 0; i < propVarContexts.size(); i++) {
+                    reduceResultRow.add(visit(propVarContexts.get(i)));
+                }
+                reduceData.add(reduceResultRow);
+            }
+        } finally {
+            rawData = origin;
+        }
+
+        String reduceFuncName = ctx.ID().getText();
+        try {
+            return functionMgr.callFunction(reduceFuncName, new Object[]{reduceData});
+        } catch (InvocationTargetException e) {
+            e.printStackTrace();
+            //FIXME: add log
+            return null;
+        } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            //FIXME: add log
+            return null;
+        }
     }
 
     @Override
@@ -117,11 +185,11 @@ public class JSONITLVisitor extends ITLBaseVisitor<Object> {
 
         String funName = ctx.ID().getText();
 
-        List<ITLParser.PropFullNameContext> propFullNameContexts = ctx.propFullName();
+        List<ITLParser.PropVarContext> propFullNameContexts = ctx.propVar();
 
         Object[] args = new Object[propFullNameContexts.size()];
         int i = 0;
-        for (ITLParser.PropFullNameContext propFullNameContext : propFullNameContexts) {
+        for (ITLParser.PropVarContext propFullNameContext : propFullNameContexts) {
             args[i] = visit(propFullNameContext);
             i++;
         }
@@ -129,8 +197,12 @@ public class JSONITLVisitor extends ITLBaseVisitor<Object> {
         try {
             return functionMgr.callFunction(funName, args);
         } catch (InvocationTargetException e) {
+            e.printStackTrace();
+            //FIXME: add log
             return null;
         } catch (IllegalAccessException e) {
+            e.printStackTrace();
+            //FIXME: add log
             return null;
         }
     }
@@ -213,7 +285,9 @@ public class JSONITLVisitor extends ITLBaseVisitor<Object> {
         try {
             getPropValue(propName);
         } catch (Exception e) {
+            //FIXME: add log
             e.printStackTrace();
+            return null;
         }
 
         if (currData == null) {

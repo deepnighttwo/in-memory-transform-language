@@ -1,0 +1,9 @@
+select
+     order.orderId as orderId,
+     timeStr(order.datetime) as datetime,
+     order.ip as ip,
+     upper(order.location) as location,
+     order.ref as ref
+from OrderData as order
+where
+     (reduce on order.items using sum(amount*(price-cost)) - order.transferCost) > 0

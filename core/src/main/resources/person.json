@@ -4,20 +4,23 @@
   "workexp": [
     {
       "companyName": "Mobile",
-      "position": "Software Developer"
-    },
-    {
-      "companyName": "Google",
-      "position": "Software Developer"
+      "position": "Software Developer",
+      "workYear": 25
     },
     {
       "companyName": "Baidu",
-      "position": "Staff"
+      "position": "Staff",
+      "workYear": 9
+    },
+    {
+      "companyName": "Google",
+      "position": "Software Developer",
+      "workYear": 20
     }
   ],
-  "age": 25,
+  "age": 28,
   "education": "University",
-  "income": 1500000,
+  "income": 15000000,
   "startIncome": 80000,
   "workyear": 5,
   "location": "Shanghai",

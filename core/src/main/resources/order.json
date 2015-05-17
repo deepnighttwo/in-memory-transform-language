@@ -11,7 +11,7 @@
     "prePaidAccount": 80.0,
     "memberPoint": 1.5
   },
-  "transferCost": 0.0,
+  "transferCost": 5.0,
   "items": [
     {
       "sku": "B00CY3UZ38",
@@ -24,6 +24,7 @@
     {
       "sku": "B00PTBGE96",
       "amount": 1,
+      "cost": 300,
       "price": 499,
       "name": "Kindle Reader DS Version",
       "type": "buy"
@@ -31,16 +32,10 @@
     {
       "sku": "B00USP7V7C",
       "amount": 1,
+      "cost": 230,
       "price": 344.5,
       "name": "NIKE REVOLUTION 2 MSL 554954",
       "type": "buy"
-    },
-    {
-      "sku": "B008BQH1NO",
-      "amount": 1,
-      "price": 288,
-      "name": "Kindle Reader DS Version",
-      "type": "gift"
     }
   ]
 }

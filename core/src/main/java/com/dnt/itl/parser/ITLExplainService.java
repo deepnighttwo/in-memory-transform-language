@@ -24,13 +24,13 @@ public class ITLExplainService {
 
     static Gson gson = new Gson();
 
-    JSONITLVisitor visitor;
+    ITLVisitor visitor;
 
 
     public ITLExplainService() {
         FunctionMgr functionMgr = new FunctionMgr();
 
-        visitor = new JSONITLVisitor();
+        visitor = new ITLVisitor();
         visitor.setFunctionMgr(functionMgr);
 
     }

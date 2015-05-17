@@ -33,6 +33,8 @@ SUB         : '-' ;
 
 MAP         : 'map';
 REDUCE      : 'reduce';
+ON          : 'on';
+USING       : 'using';
 
 HexLiteral : '0' ('x'|'X') HexDigit+ IntegerTypeSuffix? ;
 
