@@ -4,6 +4,31 @@
 
 in-memory transform language (ITL for short) is a SQL-like language to transform in-memory data.
 It is embedded, written in java and consume json or java bean object (so called in-memory).
+
+Transform including select, calculation expression, filter, self-defined function and so on. An ITL looks like SQL. Here is an example which will be used in the Example section:
+
+```sql
+select
+     person.name as name,
+     upper(person.addr) as addr,
+     person.workexp[0] as firstwork,
+     isGoodIncome(person.age, person.education, person.income) as isGoodIncome,
+     (person.income-person.startIncome)/person.workyear as salaryIncreaseYearly,
+     null as furtherData,
+     nowStr() as datetime,
+     "Phase1" as currStep,
+     99 as status,
+     'a' as grade,
+     98.5 as mark,
+     person.married as marriedStatus,
+     map on person.workexp (companyName) as mapCompanyName,
+     reduce on person.workexp using maxOnFirst(workYear,companyName,position) as maxWorkExp
+from PersonData as person
+    where (person.age > 30 and person.workyear > 7)
+    or person.location="Shanghai"
+    or person.education="doctor"
+```
+
 If familiar with ETL, ITL's function is very similar with the "T" in ETL. That is, to transform structured data.
 
 # What For
