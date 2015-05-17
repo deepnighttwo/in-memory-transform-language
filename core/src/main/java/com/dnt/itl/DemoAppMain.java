@@ -15,7 +15,7 @@ import java.util.Map;
  * Date: 2015/4/16
  * Time: 16:30
  */
-public class JSONVisitorAppMain {
+public class DemoAppMain {
 
     static Gson gson = new Gson();
 
@@ -25,7 +25,7 @@ public class JSONVisitorAppMain {
     }
 
     static void runOrder() throws NoSuchMethodException {
-        Map data = gson.fromJson(new InputStreamReader(JSONVisitorAppMain.class.getResourceAsStream("/order.json")), Map.class);
+        Map data = gson.fromJson(new InputStreamReader(DemoAppMain.class.getResourceAsStream("/order.json")), Map.class);
 
         String otl = "select\n" +
                 "     order.orderId as orderId,\n" +
@@ -56,7 +56,7 @@ public class JSONVisitorAppMain {
 
 
     static void runResume() throws NoSuchMethodException {
-        Map data = gson.fromJson(new InputStreamReader(JSONVisitorAppMain.class.getResourceAsStream("/person.json")), Map.class);
+        Map data = gson.fromJson(new InputStreamReader(DemoAppMain.class.getResourceAsStream("/person.json")), Map.class);
 
         String otl = "select\n" +
                 "     person.name as name,\n" +
