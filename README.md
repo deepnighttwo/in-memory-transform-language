@@ -1,8 +1,8 @@
-# in-memory transfer language
+# in-memory transform language
 
 # Introduction
 
-in-memory transfer language (ITL for short) is a SQL-like language to transfer in-memory data.
+in-memory transform language (ITL for short) is a SQL-like language to transform in-memory data.
 It is embedded, written in java and consume json or java bean object (so called in-memory).
 If familiar with ETL, ITL's function is very similar with the "T" in ETL. That is, to transform structured data.
 
@@ -10,9 +10,8 @@ If familiar with ETL, ITL's function is very similar with the "T" in ETL. That i
 
 Suppose there is a real time data source, it can be a SOA service, a queue or any way that can provide structured data.
 And there is a target (could be a SOA service, a queue, a database) which expect data from the source but need some **transformation**.
-How to retrieve data from source and how to send data to target is kind of fixed and better to be hard code.
 
-But the transformation is likely to change from time to time to fulfill business requirements: need a new field, need some calculation, need a new filter rule...
+Transformation is likely to change to fulfill business requirements: need a new field, need a new calculation, need a new filter rule...
 
 Sure you've been there if you ever providing real time data to others. Here comes ITL to handle this kind of tasks a litter easier.
 
