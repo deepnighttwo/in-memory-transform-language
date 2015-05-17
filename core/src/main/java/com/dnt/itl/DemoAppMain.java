@@ -25,6 +25,7 @@ public class DemoAppMain {
     }
 
     static void runOrder() throws NoSuchMethodException {
+        // prepare data
         Map data = gson.fromJson(new InputStreamReader(DemoAppMain.class.getResourceAsStream("/order.json")), Map.class);
 
         String otl = "select\n" +
@@ -36,26 +37,21 @@ public class DemoAppMain {
                 "from OrderData as order\n" +
                 "where\n" +
                 "     (reduce on order.items using sum(amount*(price-cost)) - order.transferCost) > 0";
-        ITLExplainService ITLExplainService = new ITLExplainService();
 
+        // ITLExplainService is used to run ITL
+        ITLExplainService ITLExplainService = new ITLExplainService();
+        // Add an ITL
         ITLExplainService.addITL("orderITL", otl);
 
-        long start = System.currentTimeMillis();
-        int count = 1;
-        for (int i = 0; i < count; i++) {
-            Object ret = ITLExplainService.process("OrderData", data);
-            System.out.println(gson.toJson(ret));
-            if (i % (1024 * 1024) == 0) {
-                long time = System.currentTimeMillis() - start;
-//                System.out.println(i / time);
-            }
-        }
-        long time = System.currentTimeMillis() - start;
-//        System.out.println(count / time);
+        // process a data, the first args is the data type which meets the name in ITL's from statement
+        Object ret = ITLExplainService.process("OrderData", data);
+        // return result is a json string
+        System.out.println(gson.toJson(ret));
     }
 
 
     static void runResume() throws NoSuchMethodException {
+        // prepare data
         Map data = gson.fromJson(new InputStreamReader(DemoAppMain.class.getResourceAsStream("/person.json")), Map.class);
 
         String otl = "select\n" +
@@ -78,27 +74,22 @@ public class DemoAppMain {
                 "    or person.location=\"Shanghai\"\n" +
                 "    or person.education=\"doctor\"\n" +
                 "    ";
+
+        // ITLExplainService is used to run ITL
         ITLExplainService ITLExplainService = new ITLExplainService();
 
+        // Add a self-defined function
         Method method = ExtensionFunction.class.getMethod("isGoodIncome", double.class, String.class, double.class);
-
         ITLExplainService.addFunction("isGoodIncome", method, null);
 
 
+        // Add an ITL
         ITLExplainService.addITL("personITL", otl);
 
-        long start = System.currentTimeMillis();
-        int count = 1;
-        for (int i = 0; i < count; i++) {
-            Object ret = ITLExplainService.process("PersonData", data);
-            System.out.println(gson.toJson(ret));
-            if (i % (1024 * 1024) == 0) {
-                long time = System.currentTimeMillis() - start;
-//                System.out.println(i / time);
-            }
-        }
-        long time = System.currentTimeMillis() - start;
-//        System.out.println(count / time);
+        // process a data, the first args is the data type which meets the name in ITL's from statement
+        Object ret = ITLExplainService.process("PersonData", data);
+        // return result is a json string
+        System.out.println(gson.toJson(ret));
     }
 
 }
