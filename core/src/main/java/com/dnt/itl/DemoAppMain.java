@@ -58,7 +58,7 @@ public class DemoAppMain {
                 "     person.name as name,\n" +
                 "     upper(person.addr) as addr,\n" +
                 "     person.workexp[0] as firstwork,\n" +
-                "     isGoodIncome(person.age, person.education, person.income) as isGoodIncome,\n" +
+                "     isAboveAvg(person.age, person.education, person.income) as isAboveAvg,\n" +
                 "     (person.income-person.startIncome)/person.workyear as salaryIncreaseYearly,\n" +
                 "     null as furtherData,\n" +
                 "     nowStr() as datetime,\n" +
@@ -67,7 +67,7 @@ public class DemoAppMain {
                 "     'a' as grade,\n" +
                 "     98.5 as mark,\n" +
                 "     person.married as marriedStatus,\n" +
-                "     map on person.workexp (companyName) as mapCompanyName,\n" +
+                "     map on person.workexp using upper (companyName) as mapCompanyName,\n" +
                 "     reduce on person.workexp using maxOnFirst(workYear,companyName,position) as maxWorkExp\n" +
                 "from PersonData as person\n" +
                 "    where (person.age > 30 and person.workyear > 7) \n" +
@@ -79,8 +79,8 @@ public class DemoAppMain {
         ITLExplainService ITLExplainService = new ITLExplainService();
 
         // Add a self-defined function
-        Method method = ExtensionFunction.class.getMethod("isGoodIncome", double.class, String.class, double.class);
-        ITLExplainService.addFunction("isGoodIncome", method, null);
+        Method method = ExtensionFunction.class.getMethod("isAboveAvg", double.class, String.class, double.class);
+        ITLExplainService.addFunction("isAboveAvg", method, null);
 
 
         // Add an ITL

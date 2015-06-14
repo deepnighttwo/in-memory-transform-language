@@ -233,6 +233,18 @@ public class ITLBaseListener implements ITLListener {
 	 *
 	 * <p>The default implementation does nothing.</p>
 	 */
+	@Override public void enterCollectionAgg(@NotNull ITLParser.CollectionAggContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
+	@Override public void exitCollectionAgg(@NotNull ITLParser.CollectionAggContext ctx) { }
+	/**
+	 * {@inheritDoc}
+	 *
+	 * <p>The default implementation does nothing.</p>
+	 */
 	@Override public void enterPropFullName(@NotNull ITLParser.PropFullNameContext ctx) { }
 	/**
 	 * {@inheritDoc}

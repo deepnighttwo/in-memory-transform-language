@@ -7,7 +7,7 @@ package com.dnt.itl.ext;
  */
 public class ExtensionFunction {
 
-    public static final boolean isGoodIncome(double age, String education, double income) {
+    public static final boolean isAboveAvg(double age, String education, double income) {
 
         if (income * 0.75 > age) {
             return true;

@@ -19,7 +19,7 @@ import java.util.Map;
 public class FunctionTest {
 
 
-    static int count = 1024 * 100000;
+    static int count = 1024 * 10000;
 
     @Test
     public void fullTestJSONMap() throws NoSuchMethodException {
@@ -31,7 +31,7 @@ public class FunctionTest {
                 "     person.name as name,\n" +
                 "     upper(person.addr) as addr,\n" +
                 "     person.workexp[0].companyName as firstworkCompany,\n" +
-                "     isGoodIncome(person.age, person.education, person.income) as isGoodIncome,\n" +
+                "     isAboveAvg(person.age, person.education, person.income) as isAboveAvg,\n" +
                 "     (person.income-person.startIncome)/person.workyear as salaryIncreaseYearly,\n" +
                 "     null as furtherdata,\n" +
                 "     nowStr() as datetime,\n" +
@@ -48,9 +48,9 @@ public class FunctionTest {
 
         ITLExplainService ITLExplainService = new ITLExplainService();
 
-        Method method = ExtensionFunction.class.getMethod("isGoodIncome", double.class, String.class, double.class);
+        Method method = ExtensionFunction.class.getMethod("isAboveAvg", double.class, String.class, double.class);
 
-        ITLExplainService.addFunction("isGoodIncome", method, null);
+        ITLExplainService.addFunction("isAboveAvg", method, null);
 
         ITLExplainService.addITL("first", otl);
 
@@ -92,7 +92,7 @@ public class FunctionTest {
 
         ITLExplainService ITLExplainService = new ITLExplainService();
 
-        Method method = ExtensionFunction.class.getMethod("isGoodIncome", double.class, String.class, double.class);
+        Method method = ExtensionFunction.class.getMethod("isAboveAvg", double.class, String.class, double.class);
 
         ITLExplainService.addFunction("isGoodIncome", method, null);
 

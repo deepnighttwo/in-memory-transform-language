@@ -133,6 +133,12 @@ public interface ITLVisitor<T> extends ParseTreeVisitor<T> {
 	 */
 	T visitStringVar(@NotNull ITLParser.StringVarContext ctx);
 	/**
+	 * Visit a parse tree produced by {@link ITLParser#collectionAgg}.
+	 * @param ctx the parse tree
+	 * @return the visitor result
+	 */
+	T visitCollectionAgg(@NotNull ITLParser.CollectionAggContext ctx);
+	/**
 	 * Visit a parse tree produced by {@link ITLParser#propFullName}.
 	 * @param ctx the parse tree
 	 * @return the visitor result

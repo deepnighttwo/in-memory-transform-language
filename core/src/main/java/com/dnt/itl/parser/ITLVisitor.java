@@ -69,75 +69,73 @@ public class ITLVisitor extends ITLBaseVisitor<Object> {
 
     @Override
     public Object visitMapFuncVar(@NotNull ITLParser.MapFuncVarContext ctx) {
+        Object aggOn = visit(ctx.propFullName());
 
-        Object mapOn = visit(ctx.propFullName());
+        List aggList = (List) getAggList(aggOn, ctx.collectionAgg());
 
-        List mapOnList = null;
-        // TODO: using Iterable?
-        if (mapOn instanceof List) {
-            mapOnList = (List) mapOn;
-        } else if (mapOn.getClass().isArray()) {
-            mapOnList = Arrays.asList((Object[]) mapOn);
-        } else {
-            throw new IllegalArgumentException("Not list or array:" + mapOn);
+        String mapFunction = ctx.ID().getText();
+
+        List ret = new ArrayList(aggList.size());
+
+        try {
+            for (Object e : aggList) {
+                ret.add(functionMgr.callFunction(mapFunction, (Object[]) e));
+            }
+        } catch (InvocationTargetException e1) {
+            e1.printStackTrace();
+        } catch (IllegalAccessException e1) {
+            e1.printStackTrace();
         }
 
-        List mapResult = new ArrayList(mapOnList.size() - 1);
+        return ret;
+    }
+
+
+    public Object getAggList(Object aggOn, @NotNull ITLParser.CollectionAggContext ctx) {
         Object origin = rawData;
+        List aggOnList = null;
+        // TODO: using Iterable?
+        if (aggOn instanceof List) {
+            aggOnList = (List) aggOn;
+        } else if (aggOn.getClass().isArray()) {
+            aggOnList = Arrays.asList((Object[]) aggOn);
+        } else {
+            throw new IllegalArgumentException("Not list or array:" + aggOn);
+        }
+
+        List aggData = new ArrayList(aggOnList.size() - 1);
 
         List<ITLParser.PropVarContext> propVarContexts = ctx.propVar();
+
         try {
-            for (Object obj : mapOnList) {
+            for (Object obj : aggOnList) {
                 rawData = obj;
                 currData = obj;
-                List mapResultRow = new ArrayList(propVarContexts.size());
+                Object[] aggResultRow = new Object[propVarContexts.size()];
                 for (int i = 0; i < propVarContexts.size(); i++) {
-                    mapResultRow.add(visit(propVarContexts.get(i)));
+                    aggResultRow[i] = (visit(propVarContexts.get(i)));
                 }
-                mapResult.add(mapResultRow);
+                aggData.add(aggResultRow);
             }
         } finally {
             rawData = origin;
         }
-        return mapResult;
+
+        return aggData;
     }
+
 
     @Override
     public Object visitReduceFuncVar(@NotNull ITLParser.ReduceFuncVarContext ctx) {
-        Object reduceOn = visit(ctx.propFullName());
 
-        List reduceOnList = null;
-        // TODO: using Iterable?
-        if (reduceOn instanceof List) {
-            reduceOnList = (List) reduceOn;
-        } else if (reduceOn.getClass().isArray()) {
-            reduceOnList = Arrays.asList((Object[]) reduceOn);
-        } else {
-            throw new IllegalArgumentException("Not list or array:" + reduceOn);
-        }
+        Object aggOn = visit(ctx.propFullName());
 
-        List reduceData = new ArrayList(reduceOnList.size() - 1);
-        Object origin = rawData;
+        Object aggList = getAggList(aggOn, ctx.collectionAgg());
 
-        List<ITLParser.PropVarContext> propVarContexts = ctx.propVar();
+        String reduceFunction = ctx.ID().getText();
 
         try {
-            for (Object obj : reduceOnList) {
-                rawData = obj;
-                currData = obj;
-                List reduceResultRow = new ArrayList(propVarContexts.size());
-                for (int i = 0; i < propVarContexts.size(); i++) {
-                    reduceResultRow.add(visit(propVarContexts.get(i)));
-                }
-                reduceData.add(reduceResultRow);
-            }
-        } finally {
-            rawData = origin;
-        }
-
-        String reduceFuncName = ctx.ID().getText();
-        try {
-            return functionMgr.callFunction(reduceFuncName, new Object[]{reduceData});
+            return functionMgr.callFunction(reduceFunction, new Object[]{aggList});
         } catch (InvocationTargetException e) {
             e.printStackTrace();
             //FIXME: add log
@@ -147,6 +145,7 @@ public class ITLVisitor extends ITLBaseVisitor<Object> {
             //FIXME: add log
             return null;
         }
+
     }
 
     @Override

@@ -215,6 +215,16 @@ public interface ITLListener extends ParseTreeListener {
 	 */
 	void exitStringVar(@NotNull ITLParser.StringVarContext ctx);
 	/**
+	 * Enter a parse tree produced by {@link ITLParser#collectionAgg}.
+	 * @param ctx the parse tree
+	 */
+	void enterCollectionAgg(@NotNull ITLParser.CollectionAggContext ctx);
+	/**
+	 * Exit a parse tree produced by {@link ITLParser#collectionAgg}.
+	 * @param ctx the parse tree
+	 */
+	void exitCollectionAgg(@NotNull ITLParser.CollectionAggContext ctx);
+	/**
 	 * Enter a parse tree produced by {@link ITLParser#propFullName}.
 	 * @param ctx the parse tree
 	 */

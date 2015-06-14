@@ -62,17 +62,17 @@ public class DefaultFunctions {
         return System.currentTimeMillis();
     }
 
-    public final Map maxOnFirst(List<List> rows) {
+    public final Map maxOnFirst(List<Object[]> rows) {
         if (rows == null || rows.isEmpty()) {
             return Collections.emptyMap();
         }
 
         Comparable max = null;
-        List value = null;
+        Object[] value = null;
 
-        for (List row : rows) {
-            if (max == null || (max.compareTo(row.get(0)) < 0)) {
-                max = (Comparable) row.get(0);
+        for (Object[] row : rows) {
+            if (max == null || (max.compareTo(row[0]) < 0)) {
+                max = (Comparable) row[0];
                 value = row;
             }
         }
@@ -81,17 +81,17 @@ public class DefaultFunctions {
         return ret;
     }
 
-    public final Map minOnFirst(List<List> rows) {
+    public final Map minOnFirst(List<Object[]> rows) {
         if (rows == null || rows.isEmpty()) {
             return Collections.emptyMap();
         }
 
         Comparable min = null;
-        List value = null;
+        Object[] value = null;
 
-        for (List row : rows) {
-            if (min == null || (min.compareTo(row.get(0)) > 0)) {
-                min = (Comparable) row.get(0);
+        for (Object[] row : rows) {
+            if (min == null || (min.compareTo(row[0]) > 0)) {
+                min = (Comparable) row[0];
                 value = row;
             }
         }
@@ -100,15 +100,15 @@ public class DefaultFunctions {
         return ret;
     }
 
-    public final double sum(List<List> rows) {
+    public final double sum(List<Object[]> rows) {
         if (rows == null || rows.isEmpty()) {
             return 0;
         }
 
         double var = 0;
 
-        for (List row : rows) {
-            Number number = (Number) row.get(0);
+        for (Object[] row : rows) {
+            Number number = (Number) row[0];
             var += number.doubleValue();
         }
 

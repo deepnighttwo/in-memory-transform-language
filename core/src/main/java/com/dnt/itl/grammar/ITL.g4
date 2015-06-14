@@ -20,10 +20,12 @@ propVar     : propFullName                                                      
             | StringLiteral                                                         # StringVar
             | booleanLiteral                                                        # BooleanVar
             | NULL                                                                  # NullVar
-            | MAP ON propFullName LPAREN propVar? (COMMA propVar)* RPAREN                           # MapFuncVar
-            | REDUCE ON propFullName USING ID LPAREN propVar (COMMA propVar)* RPAREN                # ReduceFuncVar
+            | MAP ON propFullName USING ID collectionAgg                            # MapFuncVar
+            | REDUCE ON propFullName USING ID collectionAgg                         # ReduceFuncVar
             | ID LPAREN propVar? (COMMA propVar)* RPAREN                            # FuncVar
             ;
+
+collectionAgg: LPAREN propVar? (COMMA propVar)* RPAREN ;
 
 propFullName: propName (DOT propName)*;
 
