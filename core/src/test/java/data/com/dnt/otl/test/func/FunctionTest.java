@@ -31,7 +31,7 @@ public class FunctionTest {
                 "     person.name as name,\n" +
                 "     upper(person.addr) as addr,\n" +
                 "     person.workexp[0].companyName as firstworkCompany,\n" +
-                "     isAboveAvg(person.age, person.education, person.income) as isAboveAvg,\n" +
+                "     getResumeRate(person.age, person.education, person.income) as resumeRate,\n" +
                 "     (person.income-person.startIncome)/person.workyear as salaryIncreaseYearly,\n" +
                 "     null as furtherdata,\n" +
                 "     nowStr() as datetime,\n" +
@@ -48,9 +48,9 @@ public class FunctionTest {
 
         ITLExplainService ITLExplainService = new ITLExplainService();
 
-        Method method = ExtensionFunction.class.getMethod("isAboveAvg", double.class, String.class, double.class);
+        Method method = ExtensionFunction.class.getMethod("getResumeRate", double.class, String.class, double.class);
 
-        ITLExplainService.addFunction("isAboveAvg", method, null);
+        ITLExplainService.addFunction("getResumeRate", method, null);
 
         ITLExplainService.addITL("first", otl);
 
@@ -92,9 +92,9 @@ public class FunctionTest {
 
         ITLExplainService ITLExplainService = new ITLExplainService();
 
-        Method method = ExtensionFunction.class.getMethod("isAboveAvg", double.class, String.class, double.class);
+        Method method = ExtensionFunction.class.getMethod("getResumeRate", double.class, String.class, double.class);
 
-        ITLExplainService.addFunction("isGoodIncome", method, null);
+        ITLExplainService.addFunction("getResumeRate", method, null);
 
         ITLExplainService.addITL("first", otl);
 

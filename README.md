@@ -12,7 +12,7 @@ select
      person.name as name,
      upper(person.addr) as addr,
      person.workexp[0] as firstwork,
-     isAboveAvg(person.age, person.education, person.income) as isAboveAvg,
+     getResumeRate(person.age, person.education, person.income) as getResumeRate,
      (person.income-person.startIncome)/person.workyear as salaryIncreaseYearly,
      null as furtherData,
      nowStr() as datetime,
@@ -97,7 +97,7 @@ select
      person.name as name,
      upper(person.addr) as addr,
      person.workexp[0] as firstwork,
-     isAboveAvg(person.age, person.education, person.income) as isAboveAvg,
+     getResumeRate(person.age, person.education, person.income) as getResumeRate,
      (person.income-person.startIncome)/person.workyear as salaryIncreaseYearly,
      null as furtherData,
      nowStr() as datetime,
@@ -126,7 +126,7 @@ After input the json data to the ITL above, the returned data from ITL is:
       "position": "Software Developer",
       "workYear": 25
     },
-    "isAboveAvg": true,
+    "getResumeRate": true,
     "salaryIncreaseYearly": 2984000,
     "datetime": "2015-06-14 18:20:18.799",
     "currStep": "Phase1",
@@ -154,7 +154,7 @@ Features demonstrated above including
 
  - Retrieve properties using **dot**
  - Retrieve array/list value using **[index]**
- - Function call (upper, isAboveAvg). upper is default function and isAboveAvg is self-defined
+ - Function call (upper, getResumeRate). upper is default function and getResumeRate is self-defined
  - Math calculation expression
  - Select literal value
  - Calculation expression
@@ -307,7 +307,7 @@ public class DemoAppMain {
                 "     person.name as name,\n" +
                 "     upper(person.addr) as addr,\n" +
                 "     person.workexp[0] as firstwork,\n" +
-                "     isAboveAvg(person.age, person.education, person.income) as isAboveAvg,\n" +
+                "     getResumeRate(person.age, person.education, person.income) as getResumeRate,\n" +
                 "     (person.income-person.startIncome)/person.workyear as salaryIncreaseYearly,\n" +
                 "     null as furtherData,\n" +
                 "     nowStr() as datetime,\n" +
@@ -328,8 +328,8 @@ public class DemoAppMain {
         ITLExplainService ITLExplainService = new ITLExplainService();
 
         // Add a self-defined function
-        Method method = ExtensionFunction.class.getMethod("isAboveAvg", double.class, String.class, double.class);
-        ITLExplainService.addFunction("isAboveAvg", method, null);
+        Method method = ExtensionFunction.class.getMethod("getResumeRate", double.class, String.class, double.class);
+        ITLExplainService.addFunction("getResumeRate", method, null);
 
 
         // Add an ITL
@@ -454,8 +454,8 @@ New functions can be added as follow:
 
 ```java
         // Add a self-defined function
-        Method method = ExtensionFunction.class.getMethod("isAboveAvg", double.class, String.class, double.class);
-        ITLExplainService.addFunction("isAboveAvg", method, null);
+        Method method = ExtensionFunction.class.getMethod("getResumeRate", double.class, String.class, double.class);
+        ITLExplainService.addFunction("getResumeRate", method, null);
 ```
 
 Please notice that the function can be static of non-static. But OTL runtime is NOT thread-safe (no sync for protection). So if the instance share data, please create a new instance for each or use sync to protect the data.

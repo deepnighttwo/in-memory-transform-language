@@ -58,7 +58,7 @@ public class DemoAppMain {
                 "     person.name as name,\n" +
                 "     upper(person.addr) as addr,\n" +
                 "     person.workexp[0] as firstwork,\n" +
-                "     isAboveAvg(person.age, person.education, person.income) as isAboveAvg,\n" +
+                "     getResumeRate(person.age, person.education, person.income) as resumeRate,\n" +
                 "     (person.income-person.startIncome)/person.workyear as salaryIncreaseYearly,\n" +
                 "     null as furtherData,\n" +
                 "     nowStr() as datetime,\n" +
@@ -79,8 +79,8 @@ public class DemoAppMain {
         ITLExplainService ITLExplainService = new ITLExplainService();
 
         // Add a self-defined function
-        Method method = ExtensionFunction.class.getMethod("isAboveAvg", double.class, String.class, double.class);
-        ITLExplainService.addFunction("isAboveAvg", method, null);
+        Method method = ExtensionFunction.class.getMethod("getResumeRate", double.class, String.class, double.class);
+        ITLExplainService.addFunction("getResumeRate", method, null);
 
 
         // Add an ITL
